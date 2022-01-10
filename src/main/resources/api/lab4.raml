@@ -1,0 +1,301 @@
+#%RAML 1.0
+title: soa-lab4
+mediaType:
+  - application/json
+protocols:
+  - HTTPS
+baseUri: /api
+version: "2.0"
+/cities:      
+  post:
+     displayName: Add city
+     responses:
+       "200":
+         body:
+           type: object
+       "400":
+         body:
+           type: object
+     securedBy: []
+     body:
+      type: cityFromClient
+/cities/filter:      
+  get:
+    displayName: Filter by meters-above-sea-level
+    queryParameters:
+      byname?:
+        example: Example
+        type: string
+      meters-above-sea-level?:
+        example: Example
+        type: string
+    responses:
+      "200":
+        body:
+          type: object
+    securedBy: []
+  post:
+    displayName: Get cities
+    responses:
+      "200":
+        body:
+          type: paginationResult
+      "400":
+        body:
+          type: object
+      "404":
+        body:
+          type: object
+    securedBy: []
+    queryParameters:
+      name?:
+        example: Example
+        type: string
+      x?:
+        example: Example
+        type: string
+      y?:
+        example: Example
+        type: string
+      area?:
+        example: Example
+        type: string
+      population?:
+        example: Example
+        type: string
+      meters_above_sea_level?:
+        example: Example
+        type: string
+      timezone?:
+        example: Example
+        type: string
+      government?:
+        example: Example
+        type: string
+      standard_of_living?:
+        example: Example
+        type: string
+      height?:
+        example: Example
+        type: string
+      birthday?:
+        example: Example
+        type: string        
+      sort?:
+        example: Example
+        type: string
+      size?:
+        example: 1
+        type: number
+        format: int
+      page?:
+        example: 1
+        type: number
+        format: int
+    body:
+      type: cityRequestParams  
+/cities/meters-above-sea-level:
+  get:
+    displayName: get Unique Meters Above Sea Level
+    responses:
+      "200":
+        body:
+          type: object
+    securedBy: []
+/cities/{id}:
+  put:
+    displayName: Modify city
+    responses:
+      "200":
+        body:
+          type: object
+      "404": {}
+      "400": {}
+    securedBy: []
+    body:
+      type: cityFromClient   
+  delete:
+    displayName: Delete city
+    responses:
+      "200": {}
+      "404": {}
+    securedBy: []
+  uriParameters:
+    id?:
+      type: string
+types:
+  human:
+    properties:
+      id?:
+        example: 1
+        type: number
+        format: int
+      height?:
+        example: 1
+        type: number
+        format: float
+      birthday?:
+        example: Example
+        type: string
+  city:
+    properties:
+      id?:
+        example: 1
+        type: number
+        format: int
+      name?:
+        example: Example
+        type: string
+      coordinates?:
+        type: coordinates
+      creationDate?:
+        example: Example
+        type: string  
+      area?:
+        example: 1
+        type: number
+        format: float
+      population?:
+        example: 1
+        type: number
+        format: int
+      metersAboveSeaLevel?:
+        example: 1
+        type: number
+        format: int  
+      timezone?:
+        example: 1
+        type: number
+        format: float  
+      government?:
+        example: Example
+        type: string
+      standardOfLiving?:
+        example: Example
+        type: string
+      human?:
+        type: human
+  coordinates:
+    properties:
+      id:
+        example: 1
+        type: number
+        format: int
+      x:
+        example: 1
+        type: number
+        format: float
+      y:
+        example: 1
+        type: number
+        format: float
+  cityFromClient:
+    properties:
+      id?:
+        example: 1
+        type: number
+        format: int
+      name?:
+        example: Example
+        type: string
+      coordinates?:
+        type: coordinatesFromClient
+      creationDate?:
+        example: Example
+        type: string  
+      area?:
+        example: Example
+        type: string  
+      population?:
+        example: Example
+        type: string  
+      metersAboveSeaLevel?:
+        example: Example
+        type: string  
+      timezone?:
+        example: Example
+        type: string  
+      government?:
+        example: Example
+        type: string
+      standardOfLiving?:
+        example: Example
+        type: string
+      governor?:
+        type: humanFromClient
+  humanFromClient:
+    properties:
+      id?:
+        example: 1
+        type: number
+        format: int
+      height?:
+        example: Example
+        type: string
+      birthday?:
+        example: Example
+        type: string
+  coordinatesFromClient:
+    properties:
+      id?:
+        example: 1
+        type: number
+        format: int
+      x?:
+        example: Example
+        type: string
+      y?:
+        example: Example
+        type: string
+  cityRequestParams:
+    properties:
+      name?:
+        type: string | nil
+      x?:
+        type: string[] | nil
+      y?:
+        type: string[] | nil
+      creationDate?:
+        type: string[] | nil
+      area?:
+        type: string[] | nil
+      population?:
+        type: string[] | nil
+      metersAboveSeaLevel?:
+        type: string[] | nil
+      timezone?:
+        type: string[] | nil
+      government?:
+        type: string[] | nil
+      standardOfLiving?:
+        type: string[] | nil
+      birthday?:
+        type: string[] | nil
+      height?:
+        type: string[] | nil
+      sort?:
+        type: string[] | nil
+      page?:
+        example: 1
+        type: number
+        format: int
+      size?:
+        example: 1
+        type: number
+        format: int
+  paginationResult: 
+    properties:
+      pageSize?:
+        example: 1
+        type: number
+        format: int
+      pageIndex?:
+        example: 1
+        type: number
+        format: int
+      totalItems?:
+        example: 1
+        type: number
+        format: int
+      list?:
+        type: city[]
